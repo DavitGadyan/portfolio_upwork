@@ -1,0 +1,76 @@
+# Build the static export and deploy it to GitHub Pages.
+#
+# One-time setup in the repository (Settings):
+#   Pages → Build and deployment → Source: "GitHub Actions"
+#   Secrets and variables → Actions → Variables:
+#     SITE_URL          absolute site URL, e.g. https://davitgadyan.github.io/portfolio_upwork  (later https://davidgadyan.com)
+#     BASE_PATH         "/portfolio_upwork" while served from github.io; empty once a custom domain is used
+#     CUSTOM_DOMAIN     empty while on github.io; "davidgadyan.com" once DNS points at Pages (writes out/CNAME)
+#     VERIFY_STRICT_ES  optional, "1" to fail the build on untranslated Spanish pages
+#
+# The build also runs scripts/verify-out.mjs, which fails if any contact route, social profile link or Toptal mention
+# slips into the served pages (the site is linked from Upwork).
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; a newer push cancels an in-flight run.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
+      NEXT_PUBLIC_BASE_PATH: ${{ vars.BASE_PATH }}
+      CUSTOM_DOMAIN: ${{ vars.CUSTOM_DOMAIN }}
+      VERIFY_STRICT_ES: ${{ vars.VERIFY_STRICT_ES }}
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      # next build type-checks the project itself; it must run before lint so the generated .next/types exist.
+      - name: Build static export (type-check, content parity, image optimisation and the compliance scan)
+        run: npm run build
+
+      - name: Lint and unit tests
+        run: |
+          npm run lint
+          npm test
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

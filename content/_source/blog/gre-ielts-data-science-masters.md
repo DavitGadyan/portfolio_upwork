@@ -1,0 +1,68 @@
+# blog-3 → gre-ielts-data-science-masters
+
+```json
+{
+  "title": "Taking the GRE and IELTS to Study Data Science Abroad",
+  "date": "2022-03-10T06:14:34.000Z",
+  "lastmod": "2026-08-29T08:00:00.000Z",
+  "author": "David Gadyan",
+  "image": "images/portfolio/exams.png",
+  "tags": [
+    "gre",
+    "ielts",
+    "education",
+    "data science",
+    "masters"
+  ],
+  "categories": [
+    "education"
+  ],
+  "articleSection": "Education",
+  "description": "Applying to a data science master's programme abroad means sitting the GRE and IELTS. Why continuous education matters, and what these exams require.",
+  "summary": "Preparing for and sitting the GRE and IELTS as entry requirements for a data science master's programme, alongside full-time freelance work.",
+  "about": [
+    "Education",
+    "Graduate admissions"
+  ],
+  "takeaways": [
+    "**GRE and IELTS are standard entry requirements** for most international data science master's programmes.",
+    "The GRE quantitative section is a **direct test of the maths foundations** data science relies on, so preparing for it is not wasted effort.",
+    "**Continuous education compounds.** A degree taken while already working brings problems back to the classroom and solutions back to the work."
+  ],
+  "faq": [
+    {
+      "q": "What exams do you need for a data science master's abroad?",
+      "a": "Most international programmes require the GRE (general aptitude, with a quantitative section) and a proof of English proficiency such as IELTS or TOEFL. Specific score requirements vary by school and programme."
+    },
+    {
+      "q": "Is GRE preparation useful beyond admissions?",
+      "a": "The quantitative section covers algebra, geometry, probability and data interpretation — the same foundations that machine learning is built on. Preparing for it doubles as a structured revision of the maths a data scientist uses."
+    }
+  ],
+  "draft": false
+}
+```
+
+### IETLS & GRE
+
+I believe that continuous education is extremelly important if one wants to succeed in this life. That is why I am planning to continue my studies and in addition to my MBA obtain a degree in Data Science from a wordlwide-known university. As an application requirement I should take GRE and IETLS exams. To share with your my results
+
+### IELTS
+
+- Listening 7.5
+- Reading 8.5
+- Writing 7.0
+- Speaking 7.5
+
+Overall 7.5
+
+### GRE 
+
+Verbal Reasoning
+with your scaled score of 150 for a minimum score of 130 and for a maximum score of 170 which is the 44th percentile.
+ 
+Quantitative Reasoning
+with your scaled score of 161 for a minimum score of 130 and for a maximum score of 170 which is the 74th percentile.
+ 
+Analytical Writing
+with your scaled score of 3.0 and a minimum score of 0 and a maximum score of 6 which is the 13th percentile.
