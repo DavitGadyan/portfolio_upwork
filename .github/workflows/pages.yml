@@ -1,7 +1,8 @@
 # Build the static export and deploy it to GitHub Pages.
 #
-# Works with zero configuration: the first run enables Pages (source "GitHub Actions") and serves the site at
-# https://<owner>.github.io/<repo>/ with the matching base path.
+# One-time setup: Settings → Pages → Build and deployment → Source: "GitHub Actions" (the workflow tries to do this
+# itself, but the default token is not always allowed to). The site is then served at https://<owner>.github.io/<repo>/
+# with the matching base path; nothing else needs configuring.
 #
 # Optional repository variables (Settings → Secrets and variables → Actions → Variables):
 #   CUSTOM_DOMAIN     "davidgadyan.com" once DNS points at Pages: writes out/CNAME, base path becomes empty and
@@ -41,9 +42,12 @@ jobs:
       - name: Check out
         uses: actions/checkout@v4
 
-      # Enables Pages with the "GitHub Actions" source on the first run, so no manual setup is needed.
+      # Tries to enable Pages with the "GitHub Actions" source. The default token is not always allowed to do that,
+      # so this step may fail on the very first run: the build still runs, only the deploy job fails. Enable Pages once
+      # in Settings → Pages → Build and deployment → Source: "GitHub Actions", then re-run the workflow.
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        continue-on-error: true
         with:
           enablement: true
 
