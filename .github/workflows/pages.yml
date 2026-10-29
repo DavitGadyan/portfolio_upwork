@@ -1,12 +1,14 @@
 # Build the static export and deploy it to GitHub Pages.
 #
-# One-time setup in the repository (Settings):
-#   Pages → Build and deployment → Source: "GitHub Actions"
-#   Secrets and variables → Actions → Variables:
-#     SITE_URL          absolute site URL, e.g. https://davitgadyan.github.io/portfolio_upwork  (later https://davidgadyan.com)
-#     BASE_PATH         "/portfolio_upwork" while served from github.io; empty once a custom domain is used
-#     CUSTOM_DOMAIN     empty while on github.io; "davidgadyan.com" once DNS points at Pages (writes out/CNAME)
-#     VERIFY_STRICT_ES  optional, "1" to fail the build on untranslated Spanish pages
+# Works with zero configuration: the first run enables Pages (source "GitHub Actions") and serves the site at
+# https://<owner>.github.io/<repo>/ with the matching base path.
+#
+# Optional repository variables (Settings → Secrets and variables → Actions → Variables):
+#   CUSTOM_DOMAIN     "davidgadyan.com" once DNS points at Pages: writes out/CNAME, base path becomes empty and
+#                     SITE_URL defaults to https://<CUSTOM_DOMAIN>
+#   SITE_URL          override the absolute site URL (rarely needed)
+#   BASE_PATH         override the base path (rarely needed; "/" means empty)
+#   VERIFY_STRICT_ES  "1" to fail the build on Spanish pages that look untranslated
 #
 # The build also runs scripts/verify-out.mjs, which fails if any contact route, social profile link or Toptal mention
 # slips into the served pages (the site is linked from Upwork).
@@ -32,14 +34,33 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL }}
-      NEXT_PUBLIC_BASE_PATH: ${{ vars.BASE_PATH }}
       CUSTOM_DOMAIN: ${{ vars.CUSTOM_DOMAIN }}
       VERIFY_STRICT_ES: ${{ vars.VERIFY_STRICT_ES }}
       NEXT_TELEMETRY_DISABLED: '1'
     steps:
       - name: Check out
         uses: actions/checkout@v4
+
+      # Enables Pages with the "GitHub Actions" source on the first run, so no manual setup is needed.
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Resolve site URL and base path
+        env:
+          SITE_URL_VAR: ${{ vars.SITE_URL }}
+          BASE_PATH_VAR: ${{ vars.BASE_PATH }}
+        run: |
+          repo="${GITHUB_REPOSITORY#*/}"
+          owner="$(echo "${GITHUB_REPOSITORY_OWNER}" | tr '[:upper:]' '[:lower:]')"
+          if [ -n "$CUSTOM_DOMAIN" ]; then site="https://${CUSTOM_DOMAIN}"; base=""
+          else site="https://${owner}.github.io/${repo}"; base="/${repo}"; fi
+          [ -n "$SITE_URL_VAR" ] && site="$SITE_URL_VAR"
+          if [ -n "$BASE_PATH_VAR" ]; then base="$BASE_PATH_VAR"; [ "$base" = "/" ] && base=""; fi
+          echo "NEXT_PUBLIC_SITE_URL=${site%/}" >> "$GITHUB_ENV"
+          echo "NEXT_PUBLIC_BASE_PATH=$base" >> "$GITHUB_ENV"
+          echo "Site: ${site%/}  base path: '${base}'  custom domain: '${CUSTOM_DOMAIN}'"
 
       - name: Set up Node
         uses: actions/setup-node@v4
