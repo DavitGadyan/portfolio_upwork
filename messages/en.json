@@ -12,7 +12,8 @@
     "mainNav": "Main navigation",
     "skipToContent": "Skip to content",
     "backToTop": "Back to top",
-    "homeAria": "David Gadyan — home"
+    "homeAria": "David Gadyan — home",
+    "materials": "Materials"
   },
   "lang": {
     "switch": "Switch language",
@@ -40,7 +41,8 @@
     "portfolio": "Portfolio",
     "testimonials": "Testimonials",
     "facts": "In numbers",
-    "faq": "Frequently asked"
+    "faq": "Frequently asked",
+    "materials": "Materials"
   },
   "about": {
     "cv": "Download my CV",
@@ -70,7 +72,7 @@
     "intro": "Ten services, one engineer. Each one is delivered end to end, from the first wireframe to the tracking that shows it worked."
   },
   "portfolio": {
-    "intro": "These 36 projects show how David Gadyan covers the full stack as one engineer: AI agents and RAG, Next.js and FastAPI products, Postgres and vector databases, Docker and Kubernetes on AWS and GCP, HIPAA-aware security, and GA4-based marketing measurement. Filter by capability or start with the featured builds.",
+    "intro": "These 38 projects show how David Gadyan covers the full stack as one engineer: AI agents and RAG, Next.js and FastAPI products, Postgres and vector databases, Docker and Kubernetes on AWS and GCP, HIPAA-aware security, and GA4-based marketing measurement. Filter by capability or start with the featured builds.",
     "filterAll": "All",
     "filterLabel": "Filter projects by capability",
     "seeMore": "See all projects",
@@ -150,8 +152,8 @@
   "meta": {
     "homeTitle": "David Gadyan | Full-Stack AI Engineer in Barcelona",
     "homeDescription": "Full-Stack AI Engineer in Barcelona. AI integration into websites and products, AI ERP/SaaS, databases, DevOps, security audits and AI marketing. 190+ projects, 8+ years.",
-    "portfolioTitle": "Portfolio: 36 AI, Full-Stack & Data Projects",
-    "portfolioDescription": "36 case studies by David Gadyan: AI agents and RAG, Next.js and FastAPI products, databases, Docker and Kubernetes deployments, security-aware builds and GA4 marketing measurement.",
+    "portfolioTitle": "Portfolio: 38 AI, Full-Stack & Data Projects",
+    "portfolioDescription": "38 case studies by David Gadyan: AI agents and RAG, Next.js and FastAPI products, databases, Docker and Kubernetes deployments, security-aware builds and GA4 marketing measurement.",
     "blogTitle": "Blog: AI, Data & Building Products",
     "blogDescription": "Articles by David Gadyan, Full-Stack AI Engineer in Barcelona: LLM and agent integration, data science, algorithmic trading and building AI products that reach production.",
     "cookiesTitle": "Cookie Policy",
@@ -160,7 +162,9 @@
     "privacyDescription": "How this site handles the little personal data it processes (analytics and hosting), and your rights under the GDPR.",
     "notFoundTitle": "Page not found",
     "ogAlt": "David Gadyan — Full-Stack AI Engineer in Barcelona",
-    "titleTemplate": "%s | David Gadyan"
+    "titleTemplate": "%s | David Gadyan",
+    "materialsTitle": "Materials: Optimization Techniques by Tool",
+    "materialsDescription": "Practical, tested techniques for the tools David Gadyan builds with, starting with Claude: how to cut Claude Code and API cost without losing quality. Interactive maps, one per tool."
   },
   "a11y": {
     "quote": "Quote",
@@ -173,5 +177,25 @@
     "skillLevel": "{name}: {pct} percent",
     "playVideo": "Play video: {title}",
     "externalLink": "opens in a new tab"
+  },
+  "materials": {
+    "intro": "Practical, tested ways to get more from the tools I build with: lower cost, better output. Pick a tool, then a technique.",
+    "pick": "Pick a tool",
+    "hint": "Pick a technique on the map to see when it helps, what to do and why it works.",
+    "when": "When it helps",
+    "action": "What to do",
+    "why": "Why it works",
+    "saving": "Typical saving",
+    "estimate": "estimate",
+    "official": "official figure",
+    "close": "Close details",
+    "graphLabel": "Technique map for {tool}",
+    "groups": {
+      "code": "Claude Code",
+      "api": "Claude API"
+    },
+    "sources": "Official figures: Anthropic pricing and API documentation. Estimates: LOW/CODE Agency, \"Claude Code Cost Optimization\" (Sep 2026), and project experience; ranges vary by codebase.",
+    "count": "{n} techniques",
+    "open": "Open the map"
   }
 }

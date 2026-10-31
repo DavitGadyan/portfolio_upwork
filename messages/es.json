@@ -12,7 +12,8 @@
     "mainNav": "Navegación principal",
     "skipToContent": "Saltar al contenido",
     "backToTop": "Volver arriba",
-    "homeAria": "David Gadyan — inicio"
+    "homeAria": "David Gadyan — inicio",
+    "materials": "Materiales"
   },
   "lang": {
     "switch": "Cambiar idioma",
@@ -40,7 +41,8 @@
     "portfolio": "Portfolio",
     "testimonials": "Testimonios",
     "facts": "En cifras",
-    "faq": "Preguntas frecuentes"
+    "faq": "Preguntas frecuentes",
+    "materials": "Materiales"
   },
   "about": {
     "cv": "Descarga mi CV",
@@ -70,7 +72,7 @@
     "intro": "Diez servicios, un solo ingeniero. Cada uno se entrega de principio a fin, desde el primer wireframe hasta el seguimiento que demuestra que ha funcionado."
   },
   "portfolio": {
-    "intro": "Estos 36 proyectos muestran cómo David Gadyan cubre todo el stack como un único ingeniero: agentes de IA y RAG, productos en Next.js y FastAPI, bases de datos Postgres y vectoriales, Docker y Kubernetes en AWS y GCP, seguridad conforme a HIPAA y medición de marketing con GA4. Filtra por capacidad o empieza por los proyectos destacados.",
+    "intro": "Estos 38 proyectos muestran cómo David Gadyan cubre todo el stack como un único ingeniero: agentes de IA y RAG, productos en Next.js y FastAPI, bases de datos Postgres y vectoriales, Docker y Kubernetes en AWS y GCP, seguridad conforme a HIPAA y medición de marketing con GA4. Filtra por capacidad o empieza por los proyectos destacados.",
     "filterAll": "Todos",
     "filterLabel": "Filtrar proyectos por capacidad",
     "seeMore": "Ver todos los proyectos",
@@ -150,8 +152,8 @@
   "meta": {
     "homeTitle": "David Gadyan | Ingeniero Full-Stack de IA en Barcelona",
     "homeDescription": "Ingeniero Full-Stack de IA en Barcelona. Integración de IA en webs y productos, ERP/SaaS con IA, bases de datos, DevOps, auditorías de seguridad y marketing con IA. Más de 190 proyectos.",
-    "portfolioTitle": "Portfolio: 36 proyectos de IA, full-stack y datos",
-    "portfolioDescription": "36 casos prácticos de David Gadyan: agentes de IA y RAG, productos en Next.js y FastAPI, bases de datos, despliegues con Docker y Kubernetes, seguridad y medición de marketing con GA4.",
+    "portfolioTitle": "Portfolio: 38 proyectos de IA, full-stack y datos",
+    "portfolioDescription": "38 casos prácticos de David Gadyan: agentes de IA y RAG, productos en Next.js y FastAPI, bases de datos, despliegues con Docker y Kubernetes, seguridad y medición de marketing con GA4.",
     "blogTitle": "Blog: IA, datos y creación de productos",
     "blogDescription": "Artículos de David Gadyan, Ingeniero Full-Stack de IA en Barcelona: integración de LLM y agentes, ciencia de datos, trading algorítmico y productos de IA que llegan a producción.",
     "cookiesTitle": "Política de cookies",
@@ -160,7 +162,9 @@
     "privacyDescription": "Cómo trata este sitio los pocos datos personales que procesa (analítica y alojamiento) y cuáles son tus derechos según el RGPD.",
     "notFoundTitle": "Página no encontrada",
     "ogAlt": "David Gadyan — Ingeniero Full-Stack de IA en Barcelona",
-    "titleTemplate": "%s | David Gadyan"
+    "titleTemplate": "%s | David Gadyan",
+    "materialsTitle": "Materiales: técnicas de optimización por herramienta",
+    "materialsDescription": "Técnicas prácticas y probadas para las herramientas con las que construye David Gadyan, empezando por Claude: cómo reducir el coste de Claude Code y de la API sin perder calidad. Mapas interactivos, uno por herramienta."
   },
   "a11y": {
     "quote": "Cita",
@@ -173,5 +177,25 @@
     "skillLevel": "{name}: {pct} por ciento",
     "playVideo": "Reproducir vídeo: {title}",
     "externalLink": "se abre en una pestaña nueva"
+  },
+  "materials": {
+    "intro": "Formas prácticas y probadas de sacar más partido a las herramientas con las que construyo: menos coste, mejores resultados. Elige una herramienta y después una técnica.",
+    "pick": "Elige una herramienta",
+    "hint": "Elige una técnica en el mapa para ver cuándo ayuda, qué hacer y por qué funciona.",
+    "when": "Cuándo ayuda",
+    "action": "Qué hacer",
+    "why": "Por qué funciona",
+    "saving": "Ahorro típico",
+    "estimate": "estimación",
+    "official": "cifra oficial",
+    "close": "Cerrar detalles",
+    "graphLabel": "Mapa de técnicas de {tool}",
+    "groups": {
+      "code": "Claude Code",
+      "api": "API de Claude"
+    },
+    "sources": "Cifras oficiales: precios y documentación de la API de Anthropic. Estimaciones: LOW/CODE Agency, \"Claude Code Cost Optimization\" (sep. 2026) y experiencia en proyectos; los rangos varían según el código base.",
+    "count": "{n} técnicas",
+    "open": "Abrir el mapa"
   }
 }

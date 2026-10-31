@@ -26,3 +26,7 @@ Thumbs.db
 *.log
 .idea/
 .vscode/
+
+# private working notes for Claude Code (never committed)
+CLAUDE.md
+CLAUDE.local.md
