@@ -23,13 +23,13 @@
   },
   "hero": {
     "greeting": "I'm David Gadyan",
-    "h1": "David Gadyan — Expert-Vetted AI Engineer, Data Scientist & SaaS Developer",
+    "h1": "David Gadyan — EXPERT-VETTED AI Engineer | Data Scientist | AI Agent | Generative AI | SaaS",
     "trust": [
       "Upwork Expert-Vetted · top 1%",
       "$500k+ earned",
       "190+ projects"
     ],
-    "slideAlt": "David Gadyan, Expert-Vetted AI Engineer and Data Scientist in Barcelona"
+    "slideAlt": "David Gadyan — EXPERT-VETTED AI Engineer | Data Scientist | AI Agent | Generative AI | SaaS"
   },
   "sections": {
     "about": "About me",
@@ -121,7 +121,7 @@
     "servicesHint": "Need something like this built? See my"
   },
   "footer": {
-    "copyright": "© {year} David Gadyan · Full-Stack AI Engineer",
+    "copyright": "© {year} David Gadyan · EXPERT-VETTED AI Engineer | Data Scientist | AI Agent | Generative AI | SaaS",
     "portfolio": "Portfolio",
     "blog": "Blog",
     "cookies": "Cookie policy",
@@ -161,7 +161,7 @@
     "privacyTitle": "Privacy Policy",
     "privacyDescription": "How this site handles the little personal data it processes (analytics and hosting), and your rights under the GDPR.",
     "notFoundTitle": "Page not found",
-    "ogAlt": "David Gadyan — Expert-Vetted AI Engineer and Data Scientist in Barcelona",
+    "ogAlt": "David Gadyan — EXPERT-VETTED AI Engineer | Data Scientist | AI Agent | Generative AI | SaaS",
     "titleTemplate": "%s | David Gadyan",
     "materialsTitle": "Materials: Optimization Techniques by Tool",
     "materialsDescription": "Practical, tested techniques for the tools David Gadyan builds with, starting with Claude: how to cut Claude Code and API cost without losing quality. Interactive maps, one per tool."

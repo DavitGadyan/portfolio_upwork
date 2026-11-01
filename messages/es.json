@@ -23,13 +23,13 @@
   },
   "hero": {
     "greeting": "Soy David Gadyan",
-    "h1": "David Gadyan — Ingeniero de IA Expert-Vetted, Científico de datos y Desarrollador SaaS",
+    "h1": "David Gadyan — Ingeniero de IA EXPERT-VETTED | Científico de datos | Agentes de IA | IA generativa | SaaS",
     "trust": [
       "Expert-Vetted en Upwork · el 1 % mejor",
       "Más de 500.000 $ facturados",
       "Más de 190 proyectos"
     ],
-    "slideAlt": "David Gadyan, Ingeniero de IA y Científico de datos Expert-Vetted en Barcelona"
+    "slideAlt": "David Gadyan — Ingeniero de IA EXPERT-VETTED | Científico de datos | Agentes de IA | IA generativa | SaaS"
   },
   "sections": {
     "about": "Sobre mí",
@@ -121,7 +121,7 @@
     "servicesHint": "¿Necesitas construir algo así? Mira mis"
   },
   "footer": {
-    "copyright": "© {year} David Gadyan · Ingeniero Full-Stack de IA",
+    "copyright": "© {year} David Gadyan · Ingeniero de IA EXPERT-VETTED | Científico de datos | Agentes de IA | IA generativa | SaaS",
     "portfolio": "Portfolio",
     "blog": "Blog",
     "cookies": "Política de cookies",
@@ -161,7 +161,7 @@
     "privacyTitle": "Política de privacidad",
     "privacyDescription": "Cómo trata este sitio los pocos datos personales que procesa (analítica y alojamiento) y cuáles son tus derechos según el RGPD.",
     "notFoundTitle": "Página no encontrada",
-    "ogAlt": "David Gadyan — Ingeniero de IA y Científico de datos Expert-Vetted en Barcelona",
+    "ogAlt": "David Gadyan — Ingeniero de IA EXPERT-VETTED | Científico de datos | Agentes de IA | IA generativa | SaaS",
     "titleTemplate": "%s | David Gadyan",
     "materialsTitle": "Materiales: técnicas de optimización por herramienta",
     "materialsDescription": "Técnicas prácticas y probadas para las herramientas con las que construye David Gadyan, empezando por Claude: cómo reducir el coste de Claude Code y de la API sin perder calidad. Mapas interactivos, uno por herramienta."
