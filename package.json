@@ -18,6 +18,8 @@
     "test:e2e": "playwright test",
     "lh": "node scripts/lighthouse.mjs",
     "check:bundle": "node scripts/check-bundle.mjs",
+    "proposal:publish": "node scripts/proposal-publish.mjs",
+    "proposal:prune": "node scripts/proposal-prune.mjs",
     "migrate:hugo": "node scripts/migrate-hugo.mjs /Users/dyada/Desktop/portfolio/david_portfolio"
   },
   "dependencies": {

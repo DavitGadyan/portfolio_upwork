@@ -1,0 +1,63 @@
+# Delete expired proposal artifacts once a day and redeploy the site when something was removed.
+#
+# Proposal links stop opening at exactly 72 hours on their own: the viewer checks the expiry that is sealed inside the
+# encrypted payload. This job only removes the ciphertext files afterwards, so running daily (instead of hourly) keeps
+# Actions usage minimal: a day with nothing to delete is a ~10-second run with no build.
+# Details: docs/upwork-proposal-artifacts.md
+
+name: Remove expired proposal artifacts
+
+on:
+  schedule:
+    - cron: '23 3 * * *' # 03:23 UTC daily (off the hour; GitHub delays crons scheduled at :00)
+  workflow_dispatch:
+
+permissions:
+  contents: write # commit the deletion
+  actions: write # dispatch the Pages deploy (a push made with GITHUB_TOKEN does not trigger other workflows)
+
+concurrency:
+  group: proposal-cleanup
+  cancel-in-progress: false
+
+jobs:
+  prune:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # No npm install needed: the prune script only uses Node built-ins.
+      - name: Remove expired artifacts
+        run: node scripts/proposal-prune.mjs
+
+      - name: Commit and push the deletion
+        id: commit
+        run: |
+          git add -A public/materials/UpworkProposalArtifacts
+          if git diff --cached --quiet; then
+            echo "Nothing expired."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Remove expired proposal artifacts"
+          pushed=false
+          for attempt in 1 2 3; do
+            if git pull --rebase origin main && git push origin HEAD:main; then pushed=true; break; fi
+            echo "Push attempt $attempt failed; retrying"; sleep 5
+          done
+          [ "$pushed" = true ] || { echo "::error::could not push the deletion"; exit 1; }
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Redeploy the site
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main

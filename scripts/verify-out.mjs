@@ -2,6 +2,8 @@
 // and the Upwork-compliance scan (no off-platform contact routes or social profile links anywhere).
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs';
 import { join, relative } from 'node:path';
+import { FORBIDDEN } from './lib/forbidden.mjs';
+import { validatePayloadShape } from './lib/proposal-crypto.mjs';
 
 const out = join(process.cwd(), 'out');
 const html = [];
@@ -15,6 +17,10 @@ for (const f of html) {
   const s = readFileSync(f, 'utf8');
   const rel = relative(out, f);
   const isEs = rel === 'es/index.html' || rel.startsWith('es/');
+  if (rel.startsWith('materials/UpworkProposalArtifacts/')) { // private proposal viewer (docs/upwork-proposal-artifacts.md): no SEO rules, must stay out of search
+    if (!/<meta name="robots" content="noindex/i.test(s)) err(f, 'private proposal viewer must be noindex');
+    continue;
+  }
   if (/<meta http-equiv="refresh" content="0; url=/.test(s)) { // legacy redirect page (scripts/postbuild.mjs): only needs its canonical
     redirectPages++;
     if (!/<link rel="canonical" href="https?:\/\//.test(s)) err(f, 'redirect page without absolute canonical');
@@ -38,26 +44,22 @@ for (const f of html) {
     if (hits >= 4) { if (process.env.VERIFY_STRICT_ES) err(f, "looks like untranslated English content"); else console.warn(`[verify] warn: ${rel} looks like untranslated English content`); }
   }
 }
-// Upwork compliance. The site is linked from an Upwork profile, and Upwork's terms forbid pointing clients to contact
-// routes outside the platform: no e-mail, phone, booking or contact services, and no social profile links. Work-sample
-// repository links (github.com/<user>/<repo>) are allowed; the bare profile root is not.
-const FORBIDDEN = [
-  [/mailto:/i, 'mailto: link'],
-  [/\btel:\+?\d/i, 'tel: link'],
-  [/[\w.+-]+@[\w-]+\.[\w.-]*[a-z]/i, 'e-mail address'],
-  [/calendly\.com/i, 'Calendly'],
-  [/formspree\.io/i, 'Formspree'],
-  [/linkedin\.com\/in\//i, 'LinkedIn profile'],
-  [/twitter\.com\//i, 'Twitter/X profile'],
-  [/(^|[^.\w])x\.com\//i, 'X profile'],
-  [/github\.com\/Davi[dt]Gadyan\/?(?=["'<)\s]|$)/i, 'GitHub profile root'],
-  [/toptal/i, 'Toptal'],
-  [/David_Gadyan_Resume4/i, 'old CV file name'],
-];
+// Upwork compliance: shared list in scripts/lib/forbidden.mjs.
 const scanned = [...html, ...['llms.txt', 'llms-full.txt', 'es/llms.txt', 'es/llms-full.txt'].map((p) => join(out, p)).filter(existsSync)];
 for (const f of scanned) {
   const s = readFileSync(f, 'utf8');
   for (const [re, what] of FORBIDDEN) { const m = s.match(re); if (m) err(f, `forbidden (Upwork policy): ${what} — ${JSON.stringify(m[0].slice(0, 60))}`); }
+}
+// Proposal artifacts are public files, so they must hold ciphertext only (scripts/lib/proposal-crypto.mjs).
+const artifacts = join(out, 'materials', 'UpworkProposalArtifacts');
+if (existsSync(artifacts)) for (const id of readdirSync(artifacts)) {
+  const p = join(artifacts, id);
+  if (!statSync(p).isDirectory()) continue;
+  const file = join(p, 'payload.json');
+  if (!existsSync(file)) { err(p, 'proposal folder without payload.json'); continue; }
+  let payload;
+  try { payload = JSON.parse(readFileSync(file, 'utf8')); } catch { err(file, 'payload.json is not valid JSON'); continue; }
+  for (const problem of validatePayloadShape(payload)) err(file, `proposal payload: ${problem}`);
 }
 if (existsSync(join(out, 'David_Gadyan_Resume4.pdf'))) err(join(out, 'David_Gadyan_Resume4.pdf'), 'stale CV with contact details is still in out/ (rm -rf out before building)');
 

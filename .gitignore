@@ -30,3 +30,6 @@ Thumbs.db
 # private working notes for Claude Code (never committed)
 CLAUDE.md
 CLAUDE.local.md
+
+# proposal links with their keys (scripts/proposal-publish.mjs); keys must never reach git
+.proposals.local.json

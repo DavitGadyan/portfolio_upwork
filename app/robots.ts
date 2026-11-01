@@ -6,7 +6,7 @@ export const dynamic = 'force-static';
 const AI_BOTS = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-Web', 'anthropic-ai', 'PerplexityBot', 'Google-Extended', 'Applebot-Extended', 'CCBot'];
 
 export default function robots(): MetadataRoute.Robots {
-  const disallow = ['/not-found-page/'];
+  const disallow = ['/not-found-page/', '/materials/UpworkProposalArtifacts/']; // private proposal links (noindex as well)
   return {
     rules: [
       { userAgent: '*', allow: '/', disallow },
