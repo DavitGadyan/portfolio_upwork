@@ -15,7 +15,7 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { TechniqueGraph, type ToolView } from '@/components/materials/TechniqueGraph';
 import { TechIcon } from '@/components/materials/icons';
 import { DataTable } from '@/components/materials/DataTable';
-import { videos, videoThumb, VIDEO_LABELS } from '@/data/videos';
+import { videos, VIDEO_LABELS } from '@/data/videos';
 
 const INDEX = '/materials/';
 const toolPath = (id: string) => `${INDEX}${id}/`;
@@ -58,26 +58,16 @@ export function MaterialsPage({ locale }: { locale: Locale }) {
                 </Link>
               </li>
             ))}
-          </ul>
-          <div className="mx-auto mt-16 max-w-3xl text-center">
-            <h2 className="section-title section-title--sm">{VIDEO_LABELS.sectionTitle[locale]}</h2>
-            <p className="mt-4 text-[1.02rem] leading-relaxed">{VIDEO_LABELS.sectionIntro[locale]}</p>
-          </div>
-          <ul className="vtiles" role="list">
-            {videos.map((v) => (
-              <li key={v.slug}>
-                <Link href={pagePath(locale, `/materials/videos/${v.slug}/`)} className="vtile">
-                  <span className="vtile__thumb">
-                    {/* eslint-disable-next-line @next/next/no-img-element -- Loom thumbnail served as-is from public/images/videos */}
-                    <img src={withBasePath(videoThumb(v.slug))} alt="" width={640} height={360} loading="lazy" decoding="async" />
-                    <span className="vtile__play" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg></span>
-                    <span className="vtile__len">{v.minutes}</span>
-                  </span>
-                  <strong>{v.title[locale]}</strong>
-                  <small>{VIDEO_LABELS.watch[locale]} →</small>
-                </Link>
-              </li>
-            ))}
+            <li>
+              <Link href={pagePath(locale, '/materials/videos/')} className="tg__tile">
+                <span className="tg__tile-icon" aria-hidden="true">
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><path d="M10.5 10.5v4l3.5-2z" fill="currentColor" /></svg>
+                </span>
+                <strong>{VIDEO_LABELS.folder[locale]}</strong>
+                <p>{VIDEO_LABELS.sectionIntro[locale]}</p>
+                <small>{fmt(VIDEO_LABELS.count[locale], { n: videos.length })} · {VIDEO_LABELS.watch[locale]} →</small>
+              </Link>
+            </li>
           </ul>
         </div>
       </section>

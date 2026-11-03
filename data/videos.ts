@@ -20,6 +20,8 @@ export const videoThumb = (slug: string) => `/images/videos/${slug}.jpg`;
 
 export const VIDEO_LABELS = {
   section: { en: 'Video introductions', es: 'Presentaciones en vídeo' },
+  folder: { en: 'Videos', es: 'Vídeos' },
+  count: { en: '{n} videos', es: '{n} vídeos' },
   sectionTitle: { en: 'Video Introductions by Topic', es: 'Presentaciones en vídeo por tema' },
   sectionIntro: {
     en: 'Short videos where I introduce myself and how I work in each area. Pick a topic, press play.',
