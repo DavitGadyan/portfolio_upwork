@@ -70,7 +70,7 @@ export function isExpired(expiresAt, now = new Date()) {
   return !Number.isFinite(t) || t <= new Date(now).getTime();
 }
 
-/** The link the client receives. siteUrl is the absolute site root, e.g. https://davitgadyan.github.io/portfolio_upwork */
+/** The link the client receives. siteUrl is the absolute site root, e.g. https://upwork.davidgadyan.com */
 export function proposalLink(siteUrl, id, key) {
   return `${String(siteUrl).replace(/\/+$/, '')}${ARTIFACTS_URL_PATH}#p=${id}&k=${key}`;
 }

@@ -1,0 +1,65 @@
+{
+  "_comment": "Loom video introductions, one page each under /materials/videos/<slug>/ (components/pages/VideosPage.tsx). `short` is the short link sent to clients: scripts/postbuild.mjs writes a redirect page at /<short>/ (and its lowercase form) to the video page.",
+  "videos": [
+    {
+      "slug": "data-science-ml-dl",
+      "short": "DataScienceMLDL",
+      "loom": "d1563886351c496ba76813ed3bd6b8df",
+      "minutes": "2:24",
+      "categories": ["data-science-ml", "computer-vision"],
+      "title": { "en": "Data Science, Machine Learning & Deep Learning", "es": "Ciencia de datos, machine learning y deep learning" },
+      "intro": {
+        "en": "A short video introduction to how I approach data science, machine learning and deep learning work, from the data to a model running in production.",
+        "es": "Una breve presentación en vídeo de cómo abordo los proyectos de ciencia de datos, machine learning y deep learning, desde los datos hasta un modelo en producción."
+      }
+    },
+    {
+      "slug": "generative-ai",
+      "short": "GenAI",
+      "loom": "92cd7dca2c74443cad0aefc50876b5f6",
+      "minutes": "2:50",
+      "categories": ["ai-agents"],
+      "title": { "en": "Generative AI & AI Agents", "es": "IA generativa y agentes de IA" },
+      "intro": {
+        "en": "A short video introduction to my generative AI work: LLM applications, RAG and AI agents built into real products.",
+        "es": "Una breve presentación en vídeo de mi trabajo con IA generativa: aplicaciones con LLM, RAG y agentes de IA integrados en productos reales."
+      }
+    },
+    {
+      "slug": "algo-trading",
+      "short": "AlgoTrading",
+      "loom": "4d4a98a5a00b4429bd2757b073ac8264",
+      "minutes": "1:40",
+      "categories": ["finance-quant"],
+      "title": { "en": "Algorithmic Trading", "es": "Trading algorítmico" },
+      "intro": {
+        "en": "A short video introduction to my algorithmic trading work: trading bots, backtesting and the data pipelines behind them.",
+        "es": "Una breve presentación en vídeo de mi trabajo en trading algorítmico: bots de trading, backtesting y las canalizaciones de datos que los alimentan."
+      }
+    },
+    {
+      "slug": "ai-marketing",
+      "short": "AIMarketing",
+      "loom": "c61ecaf1219e40a7b9dd11c8d1e489b7",
+      "minutes": "3:19",
+      "categories": ["ai-marketing"],
+      "title": { "en": "AI Marketing & Sales", "es": "Marketing y ventas con IA" },
+      "intro": {
+        "en": "A short video introduction to how I use AI and analytics in marketing and sales: tracking, lead scoring and measuring what actually converts.",
+        "es": "Una breve presentación en vídeo de cómo uso la IA y la analítica en marketing y ventas: medición, lead scoring y qué convierte de verdad."
+      }
+    },
+    {
+      "slug": "full-stack-saas",
+      "short": "FullStackSaaS",
+      "loom": "ed148683520b46e99ba9be7dddfc98bb",
+      "minutes": "2:57",
+      "categories": ["ai-erp-saas", "fullstack-uiux"],
+      "title": { "en": "Building Scalable SaaS and AI Systems End to End", "es": "SaaS y sistemas de IA escalables de principio a fin" },
+      "intro": {
+        "en": "A short video introduction to how I build SaaS products and AI systems end to end, from the interface and the back end to deployment.",
+        "es": "Una breve presentación en vídeo de cómo construyo productos SaaS y sistemas de IA de principio a fin, desde la interfaz y el backend hasta el despliegue."
+      }
+    }
+  ]
+}

@@ -21,11 +21,11 @@ Next.js 16 (App Router, static export), React 19, Tailwind CSS 4 and MDX content
 
 ## Environment variables
 
-| Variable | On davidgadyan.com | While on github.io |
+| Variable | On upwork.davidgadyan.com (live) | Without a custom domain |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | `https://davidgadyan.com` | `https://davitgadyan.github.io/portfolio_upwork` |
+| `NEXT_PUBLIC_SITE_URL` | `https://upwork.davidgadyan.com` | `https://davitgadyan.github.io/portfolio_upwork` |
 | `NEXT_PUBLIC_BASE_PATH` | *(empty)* | `/portfolio_upwork` |
-| `CUSTOM_DOMAIN` | `davidgadyan.com` (writes `out/CNAME`) | *(empty)* |
+| `CUSTOM_DOMAIN` | `upwork.davidgadyan.com` (writes `out/CNAME`) | *(empty)* |
 | `VERIFY_STRICT_ES` | `1` once all Spanish content is translated | *(empty)* |
 
 Locally, copy `.env.example` to `.env.local`. In GitHub, set them as **repository variables** (`Settings → Secrets and

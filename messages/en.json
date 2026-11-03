@@ -129,7 +129,7 @@
     "manageCookies": "Manage cookies"
   },
   "consent": {
-    "title": "Cookies on davidgadyan.com",
+    "title": "Cookies on upwork.davidgadyan.com",
     "body": "This site uses cookies. Visit our cookies policy page for more information and to change your preferences.",
     "policyLink": "Cookies policy",
     "acceptAll": "Accept all cookies",
@@ -157,7 +157,7 @@
     "blogTitle": "Blog: AI, Data & Building Products",
     "blogDescription": "Articles by David Gadyan, Expert-Vetted AI Engineer and Data Scientist in Barcelona: LLM and agent integration, data science, algorithmic trading and building AI products that reach production.",
     "cookiesTitle": "Cookie Policy",
-    "cookiesDescription": "Which cookies davidgadyan.com uses, why, and how to change your choice at any time.",
+    "cookiesDescription": "Which cookies upwork.davidgadyan.com uses, why, and how to change your choice at any time.",
     "privacyTitle": "Privacy Policy",
     "privacyDescription": "How this site handles the little personal data it processes (analytics and hosting), and your rights under the GDPR.",
     "notFoundTitle": "Page not found",

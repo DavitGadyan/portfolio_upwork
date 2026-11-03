@@ -10,7 +10,7 @@
 //   --dry-run   encrypt and print the link, write nothing
 //
 // Env: PORTFOLIO_GITHUB_TOKEN, PORTFOLIO_REPO (DavitGadyan/portfolio_upwork), PORTFOLIO_BRANCH (main),
-//      PORTFOLIO_SITE_URL (https://davitgadyan.github.io/portfolio_upwork)
+//      PORTFOLIO_SITE_URL (https://upwork.davidgadyan.com)
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -87,7 +87,7 @@ async function main() {
   const title = o.title || titleOf(html) || 'Proposal';
   const id = newProposalId();
   const { payload, key } = encryptProposal({ html, title, chrome: o.chrome, ttlHours: o.hours });
-  const siteUrl = process.env.PORTFOLIO_SITE_URL || 'https://davitgadyan.github.io/portfolio_upwork';
+  const siteUrl = process.env.PORTFOLIO_SITE_URL || 'https://upwork.davidgadyan.com';
   const link = proposalLink(o.local ? 'http://localhost:4173' : siteUrl, id, key);
   const path = `${ARTIFACTS_DIR}/${id}/payload.json`;
 

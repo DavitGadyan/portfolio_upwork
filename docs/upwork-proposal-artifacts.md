@@ -49,7 +49,7 @@ Path: `public/materials/UpworkProposalArtifacts/<id>/payload.json`
 The build (`scripts/verify-out.mjs`) fails if a payload has another shape or holds a plaintext `html`, `title` or
 key field.
 
-Link: `https://davitgadyan.github.io/portfolio_upwork/materials/UpworkProposalArtifacts/#p=<id>&k=<key>`
+Link: `https://upwork.davidgadyan.com/materials/UpworkProposalArtifacts/#p=<id>&k=<key>`
 
 ## Rules for the HTML
 
@@ -81,7 +81,7 @@ Store it in UpworkNotificationAssistant's git-ignored `.env`:
 PORTFOLIO_GITHUB_TOKEN=github_pat_...
 PORTFOLIO_REPO=DavitGadyan/portfolio_upwork
 PORTFOLIO_BRANCH=main
-PORTFOLIO_SITE_URL=https://davitgadyan.github.io/portfolio_upwork
+PORTFOLIO_SITE_URL=https://upwork.davidgadyan.com
 ```
 
 A commit made with this token triggers `pages.yml` by itself, so no Actions permission is needed. The token can only
@@ -161,7 +161,7 @@ export async function publishArtifact(html: string, title: string, opts: { chrom
   if (hits.length) throw new Error(`diagram blocked (Upwork contact-free rule): ${hits.join('; ')}`);
   const id = newId();
   const { payload, key } = encryptArtifact(html, title, opts);
-  const site = (process.env.PORTFOLIO_SITE_URL ?? 'https://davitgadyan.github.io/portfolio_upwork').replace(/\/+$/, '');
+  const site = (process.env.PORTFOLIO_SITE_URL ?? 'https://upwork.davidgadyan.com').replace(/\/+$/, '');
   const link = `${site}/materials/UpworkProposalArtifacts/#p=${id}&k=${key}`;
   if (opts.dryRun) return { id, link, expiresAt: payload.expiresAt, committed: false, payload };
 

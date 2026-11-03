@@ -15,6 +15,7 @@ import { JsonLd } from '@/components/seo/JsonLd';
 import { TechniqueGraph, type ToolView } from '@/components/materials/TechniqueGraph';
 import { TechIcon } from '@/components/materials/icons';
 import { DataTable } from '@/components/materials/DataTable';
+import { videos, videoThumb, VIDEO_LABELS } from '@/data/videos';
 
 const INDEX = '/materials/';
 const toolPath = (id: string) => `${INDEX}${id}/`;
@@ -54,6 +55,26 @@ export function MaterialsPage({ locale }: { locale: Locale }) {
                   <strong>{mat.name}</strong>
                   <p>{mat.tagline[locale]}</p>
                   <small>{fmt(m.materials.count, { n: mat.techniques.length })} · {m.materials.open} →</small>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="mx-auto mt-16 max-w-3xl text-center">
+            <h2 className="section-title section-title--sm">{VIDEO_LABELS.sectionTitle[locale]}</h2>
+            <p className="mt-4 text-[1.02rem] leading-relaxed">{VIDEO_LABELS.sectionIntro[locale]}</p>
+          </div>
+          <ul className="vtiles" role="list">
+            {videos.map((v) => (
+              <li key={v.slug}>
+                <Link href={pagePath(locale, `/materials/videos/${v.slug}/`)} className="vtile">
+                  <span className="vtile__thumb">
+                    {/* eslint-disable-next-line @next/next/no-img-element -- Loom thumbnail served as-is from public/images/videos */}
+                    <img src={withBasePath(videoThumb(v.slug))} alt="" width={640} height={360} loading="lazy" decoding="async" />
+                    <span className="vtile__play" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg></span>
+                    <span className="vtile__len">{v.minutes}</span>
+                  </span>
+                  <strong>{v.title[locale]}</strong>
+                  <small>{VIDEO_LABELS.watch[locale]} →</small>
                 </Link>
               </li>
             ))}

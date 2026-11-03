@@ -64,8 +64,8 @@ describe('proposal payload contract', () => {
     const id = newProposalId();
     expect(id).toMatch(ID_RE);
     expect(newProposalId()).not.toBe(id);
-    expect(proposalLink('https://davitgadyan.github.io/portfolio_upwork/', id, 'KEY'))
-      .toBe(`https://davitgadyan.github.io/portfolio_upwork/materials/UpworkProposalArtifacts/#p=${id}&k=KEY`);
+    expect(proposalLink('https://upwork.davidgadyan.com/', id, 'KEY'))
+      .toBe(`https://upwork.davidgadyan.com/materials/UpworkProposalArtifacts/#p=${id}&k=KEY`);
   });
 
   it('treats invalid dates as expired', () => {

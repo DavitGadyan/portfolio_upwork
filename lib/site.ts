@@ -1,5 +1,5 @@
 /** Site-wide constants. SITE_URL includes the basePath (interim github.io phase) so every absolute URL is correct. */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://davidgadyan.com').replace(/\/+$/, '');
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://upwork.davidgadyan.com').replace(/\/+$/, '');
 export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 export const SITE_NAME = 'David Gadyan';
 export const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-VVQQRF2LWE'; // GA4 property "davidgadyan.com" (the old Hugo site keeps G-KYHRZEKV8R); used without a GTM container and for the ga-disable flag

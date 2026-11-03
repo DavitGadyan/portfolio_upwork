@@ -1,5 +1,5 @@
 // After `next build` + image optimisation: 404.html for GitHub Pages, .nojekyll, optional CNAME, required-file assertions.
-import { cpSync, existsSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const out = join(process.cwd(), 'out');
@@ -16,6 +16,31 @@ rmSync(join(out, '404'), { recursive: true, force: true }); // Next's default no
 const domain = (process.env.CUSTOM_DOMAIN ?? '').trim();
 if (domain) writeFileSync(join(out, 'CNAME'), `${domain}\n`);
 else if (existsSync(join(out, 'CNAME'))) rmSync(join(out, 'CNAME'));
+
+// Short links for the Loom video introductions (data/videos.json): /<short>/ and its lowercase form redirect to the
+// video page, e.g. upwork.davidgadyan.com/GenAI and /videos/GenAI → /materials/videos/generative-ai/. GitHub Pages cannot send 301s, so
+// this is a meta refresh + canonical page (scripts/verify-out.mjs treats it as a redirect page).
+const site = (process.env.NEXT_PUBLIC_SITE_URL || 'https://upwork.davidgadyan.com').replace(/\/+$/, '');
+const { videos } = JSON.parse(readFileSync(join(process.cwd(), 'data', 'videos.json'), 'utf8'));
+const esc = (u) => u.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
+for (const v of videos) {
+  const target = `${site}/materials/videos/${v.slug}/`;
+  const page = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta name="robots" content="noindex"><title>Video · David Gadyan</title><meta http-equiv="refresh" content="0; url=${esc(target)}"><link rel="canonical" href="${esc(target)}"><script>location.replace(${JSON.stringify(target)})</script></head><body><p><a href="${esc(target)}">${esc(target)}</a></p></body></html>\n`;
+  const names = [...new Set([v.short, v.short.toLowerCase()].flatMap((n) => [n, `videos/${n}`]))];
+  const taken = (name) => existsSync(join(out, name, 'index.html')) && !readFileSync(join(out, name, 'index.html'), 'utf8').includes('<title>Video · David Gadyan</title>');
+  if (names.some(taken)) { console.error(`[postbuild] short link /${v.short}/ collides with a page`); process.exit(1); }
+  for (const name of names) {
+    mkdirSync(join(out, name), { recursive: true });
+    writeFileSync(join(out, name, 'index.html'), page);
+  }
+}
+
+// /videos/ itself lists every video introduction.
+{
+  const target = `${site}/materials/videos/`;
+  mkdirSync(join(out, 'videos'), { recursive: true });
+  writeFileSync(join(out, 'videos', 'index.html'), `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><meta name="robots" content="noindex"><title>Videos · David Gadyan</title><meta http-equiv="refresh" content="0; url=${esc(target)}"><link rel="canonical" href="${esc(target)}"><script>location.replace(${JSON.stringify(target)})</script></head><body><p><a href="${esc(target)}">${esc(target)}</a></p></body></html>\n`);
+}
 
 const required = [
   'index.html', 'es/index.html', '404.html', '.nojekyll',
