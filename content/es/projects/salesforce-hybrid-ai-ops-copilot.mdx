@@ -1,0 +1,56 @@
+---
+title: "IA híbrida para Salesforce: Claude, ChatGPT y LLM privados, un router"
+coverAlt: "IA sobre tus datos de Salesforce, con seguridad: los registros pasan por un router de políticas hacia Claude o ChatGPT con datos personales enmascarados, hacia un LLM privado que no sale de la red o de vuelta a Salesforce sin coste de modelo"
+summary: "Usar IA sobre los datos de Salesforce sin salir de Salesforce, sin pagar de más por un único modelo y sin filtrar datos de clientes. Un router envía cada petición a Salesforce, a Claude, a ChatGPT o a un LLM privado dentro de la red del cliente según la sensibilidad, lo que está en juego y el coste, y enmascara los datos personales antes de que salga nada. Encima: una revisión de Apex y Flow que devuelve código corregido y tests, un agente de ingresos que trabaja leads dormidos con borradores verificados y un planificador de refrescos de sandbox y migraciones. Nada se escribe en Salesforce sin la aprobación de una persona."
+description: "Router de IA para Salesforce: cada petición va a Salesforce, Claude, ChatGPT o un LLM privado según sensibilidad y coste, con enmascarado de datos, revisión de Apex y aprobaciones."
+outcomes:
+  - "Los registros sensibles quedan protegidos: los datos médicos y de tarjeta solo van a un modelo dentro de la red, y nombres, correos y teléfonos se sustituyen por tokens antes de que Claude o ChatGPT los vean, y se restauran en la respuesta."
+  - "Cada petición va a la opción segura más barata: una pregunta de pipeline la responde Salesforce por 0 $, y la misma evaluación de riesgo de una oportunidad costó 0,007 $ con Claude Opus, 0,0001 $ con Claude Haiku y nada por llamada con el modelo privado."
+  - "El Apex escrito con IA pasa primero por reglas fijas y después por Claude, que devuelve código corregido y una clase de test masivo; en una clase de pagos de ejemplo confirmó 8 hallazgos de las reglas y encontró 4 más, incluido un error de callout después de DML que detiene el proceso tras el primer registro."
+  - El agente de ingresos puntúa y clasifica leads dormidos y redacta correos breves con cada dato verificado contra el CRM, y el planificador convierte un refresco de sandbox o una migración entre orgs en un runbook ordenado y revisado.
+metrics:
+  - label: Rutas de modelo
+    value: "4 (Salesforce, Claude, ChatGPT, LLM privado)"
+  - label: Pregunta de pipeline
+    value: "0 $ (la responde Salesforce)"
+  - label: Riesgo de una oportunidad
+    value: "0,007 $ Opus · 0,0001 $ Haiku"
+  - label: Revisión de Apex, una clase
+    value: "8 de reglas + 4 de Claude"
+  - label: Escrituras sin aprobación
+    value: "0"
+---
+
+## El problema
+
+Los equipos que buscan trabajo de Salesforce con IA describen siempre los mismos problemas. Legal teme que los datos de clientes acaben en un modelo externo. Finanzas teme la factura de los modelos y quedar atado a un solo proveedor. Los administradores temen que el Apex y los Flows escritos con IA parezcan correctos y fallen en producción. Ventas tiene miles de leads antiguos que nadie trabaja, y cada refresco de sandbox o migración de org se come días de administración.
+
+Este proyecto responde a cada uno con algo que funciona, no con diapositivas.
+
+## El producto en uso
+
+<Video src="/videos/sf-ops-copilot.mp4" poster="/videos/sf-ops-copilot.webp" ratio="4 / 3" title="Recorrido por la IA híbrida para Salesforce" caption="Recorrido por el router, la revisión de Apex, el agente de ingresos y el planificador de refrescos, grabado en tiempo real con las esperas del modelo a velocidad 8×." />
+
+## Qué construí
+
+![Router de IA: un registro de admisión de un paciente va al LLM privado porque contiene datos médicos, y la traza de decisión muestra que no salió de la red](/images/portfolio/sf-ops-private-llm.jpg)
+
+**Un router que decide adónde pueden ir los datos.** Cada petición se revisa en busca de campos sensibles. Los datos médicos y de tarjeta solo van a un modelo dentro de la red del cliente. La traza de decisión muestra qué política se aplicó y por qué.
+
+![Prompt enmascarado: nombres, correos y teléfonos sustituidos por tokens antes de que Claude vea el registro y restaurados en la respuesta](/images/portfolio/sf-ops-masked-prompt.jpg)
+
+**Enmascarado antes de que salga nada.** Nombres, correos y teléfonos se sustituyen por tokens antes de que Claude o ChatGPT vean el registro, y se vuelven a poner en la respuesta. Salesforce sigue siendo el sistema de referencia y el mejor modelo sigue haciendo el trabajo.
+
+![Comparación de modelos: la misma oportunidad de Salesforce evaluada por Claude Opus, Claude Haiku y un modelo privado, con latencia y coste por respuesta](/images/portfolio/sf-ops-benchmark.jpg)
+
+**El coste se decide con datos, no con el discurso de un proveedor.** Una vista de comparación ejecuta el mismo registro en todos los modelos conectados, así que la elección de ruta se basa en coste y calidad reales. Añadir o cambiar un proveedor es un ajuste, no una reconstrucción.
+
+![Revisión de Apex: hallazgos en una clase de pagos y después el código Queueable corregido mostrado como diff](/images/portfolio/sf-ops-code-review.jpg)
+
+**Revisión de Apex y Flow que corrige el código.** Reglas fijas detectan consultas dentro de bucles, falta de sharing y de seguridad de campos, IDs y claves escritos en el código. Después Claude confirma cada hallazgo, añade los que las reglas no ven y devuelve código corregido con una clase de test masivo.
+
+![Refrescar y migrar: conciliación de registros entre origen y destino y la revisión de arquitectura de Claude con un runbook](/images/portfolio/sf-ops-refresh-review.jpg)
+
+**Refrescos de sandbox y migraciones, planificados.** Tras un refresco alguien tiene que enmascarar datos personales, apuntar las integraciones a entornos de prueba, parar trabajos programados y recargar datos de prueba, normalmente de memoria. El planificador construye esa lista desde los metadatos de la propia org, ordena la carga de datos para que las búsquedas se resuelvan, mapea campos para una migración entre orgs, concilia recuentos de registros y pide a Claude que revise el plan y escriba el runbook.
+
+**Las personas mantienen el control.** El agente de ingresos puntúa y clasifica cada lead, elige la siguiente mejor acción y redacta un correo breve y concreto. Cualquier borrador que cite algo que no está en el CRM vuelve a reescribirse, y nada se envía ni se actualiza hasta que una persona lo aprueba. Cada decisión de la IA queda registrada.

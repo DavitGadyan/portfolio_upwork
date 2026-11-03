@@ -1,0 +1,62 @@
+---
+title: "Azure AI Automation: Document Intelligence, RAG y agentes gobernados"
+coverAlt: "Portada de Azure AI Automation: un portátil con el panel, una factura, una cita, una tarjeta de aprobación y una línea de tiempo de trazas alrededor"
+summary: "Plataforma integral de Azure y LLM para el back office de construcción e industria. Convierte PDF desordenados en datos validados citando la fuente de cada campo, responde a las preguntas del equipo solo con documentos de la empresa y con citas, y ejecuta un agente de IA cuyas acciones de escritura esperan siempre la aprobación de una persona. Cada llamada se traza y se costea, y las versiones de prompts se miden con conjuntos de referencia. En inglés y alemán."
+description: "Plataforma de IA en Azure: extracción de documentos con procedencia por campo, RAG con citas que sabe abstenerse, agentes con aprobación, trazas OpenTelemetry y evals de LLM."
+outcomes:
+  - Facturas de proveedores, informes de inspección, certificados de material y planos se convierten en registros tipados citando el texto exacto de cada campo; las reglas deterministas marcan una factura alemana con un neto erróneo en lugar de contabilizarla.
+  - Las preguntas del equipo se responden solo con documentos de la empresa, con citas numeradas que abren el pasaje original y una respuesta explícita de «contexto insuficiente» cuando los documentos no lo cubren.
+  - El agente puede consultar libremente, pero crear tickets, cambiar pedidos o escribir a proveedores espera a un aprobador; las mismas herramientas funcionan desde Claude Desktop o Claude Code por MCP con las mismas aprobaciones.
+  - Cada procesamiento, respuesta y ejecución del agente es una traza con tokens y coste por llamada al modelo, y los cambios de prompt se comparan con cifras de referencia, no con impresiones.
+metrics:
+  - label: Recall@5 de recuperación
+    value: "1.00"
+  - label: Precisión de respuestas
+    value: "0.875 → 1.00"
+  - label: Precisión de extracción por campo
+    value: "0.97"
+  - label: Citas de procedencia localizadas
+    value: "30 / 30"
+  - label: Idiomas
+    value: "EN + DE"
+---
+
+## El problema
+
+Los equipos que intentan conectar los servicios de IA de Azure con operaciones reales chocan con los mismos muros: muchos servicios que orquestar (Document Intelligence, Blob, colas, búsqueda y el modelo), estado que debe sobrevivir a pasos asíncronos y aprobaciones humanas, llamadas a herramientas que rompen el bucle del agente, requisitos de cumplimiento (RGPD, auditoría, identidad) y ninguna forma de saber si un cambio de prompt mejoró o empeoró las respuestas.
+
+La plataforma está pensada para el back office de construcción e industria, donde el papeleo son facturas de proveedores, informes de inspección, certificados de material y planos, en inglés y alemán.
+
+## El producto en uso
+
+<Video src="/videos/azure-ai-automation.mp4" poster="/videos/azure-ai-automation.webp" ratio="16 / 10" title="Recorrido por Azure AI Automation" caption="Recorrido: una factura alemana marcada con procedencia por campo, una respuesta con citas, una petición del agente que espera aprobación y continúa, la traza que lo une todo y una comparación de evals entre dos configuraciones." />
+
+## Qué construí
+
+![Panel: documentos procesados, ejecuciones del agente, aprobaciones pendientes y coste de LLM, con coste diario por módulo y gasto por modelo](/images/portfolio/azure-ai-dashboard.jpg)
+
+**Coste y calidad en una sola vista.** Documentos procesados, ejecuciones del agente, aprobaciones pendientes y gasto en modelos de los últimos 14 días, desglosados por módulo y por modelo.
+
+![Una factura alemana de hormigón junto a sus campos extraídos, cada uno enlazado al lugar exacto de la página de donde salió](/images/portfolio/azure-ai-provenance.jpg)
+
+**Extracción de documentos con procedencia.** La canalización extrae palabras con coordenadas (PyMuPDF, Azure AI Document Intelligence u OCR por visión para escaneos), clasifica el documento y extrae un registro tipado con salidas estructuradas. Cada campo cita su texto de origen, así que el revisor hace clic en un valor y ve de qué parte de la página salió.
+
+![Pestaña de validación: las líneas suman 9.630,00 pero el subtotal dice 9.530, así que la factura queda marcada para revisión](/images/portfolio/azure-ai-validation.jpg)
+
+**Reglas antes de contabilizar.** Comprobaciones deterministas validan totales, fechas y lógica entre campos. Aquí las líneas no suman el subtotal, así que la factura va a revisión en lugar de a contabilidad.
+
+![Agente de operaciones abriendo un ticket de alta prioridad por un ensayo de probeta de hormigón fallido, con cada llamada a herramienta visible](/images/portfolio/azure-ai-agent.jpg)
+
+![Aprobaciones: una acción de envío de correo pedida por el agente espera a que una persona la apruebe o rechace](/images/portfolio/azure-ai-approval.jpg)
+
+**Un agente gobernado.** Un agente con herramientas consulta proyectos, proveedores, pedidos y tickets, y busca en la base de conocimiento. Todo lo que escribe (un ticket, el estado de un pedido, un correo a un proveedor) queda aparcado para un aprobador; el worker lo ejecuta tras la aprobación y la ejecución continúa. Lo rodean permisos de herramientas por rol, detección de bucles, presupuestos de tokens, tiempos límite, un interruptor de parada y un registro de auditoría completo.
+
+![Cascada de trazas de una ejecución del agente: llamadas al modelo, llamadas a herramientas y la acción aprobada, con tiempo y coste por tramo](/images/portfolio/azure-ai-trace.jpg)
+
+![Evals: ejecuciones con conjuntos de referencia para recuperación, respuestas y extracción, y una comparación entre dos configuraciones de prompt y embeddings](/images/portfolio/azure-ai-evals.jpg)
+
+**Trazado y medido.** Cada ejecución es una traza OpenTelemetry con tokens y coste por llamada, visible en la aplicación o en Application Insights. Los prompts están versionados y los conjuntos de referencia miden recall de recuperación, corrección y fidelidad de las respuestas, abstención y precisión de extracción. Con los datos de demostración, cambiar a un modelo de embeddings multilingüe llevó la corrección de respuestas y la precisión de abstención de 0,875 a 1,00; fue la vista de evals la que mostró la diferencia.
+
+## Cómo se ejecuta
+
+Primero en local: un solo `docker compose up` levanta la API, el worker, la interfaz, PostgreSQL con pgvector y Azurite, sin necesitar recursos de Azure. El mismo código se despliega en Azure Container Apps con identidad administrada, Key Vault, almacenamiento Blob y Queue, PostgreSQL Flexible Server, Document Intelligence y Log Analytics, todo definido en Bicep.

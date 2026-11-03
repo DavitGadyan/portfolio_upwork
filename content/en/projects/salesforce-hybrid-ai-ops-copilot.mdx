@@ -1,0 +1,91 @@
+---
+title: "Hybrid AI for Salesforce: Claude, ChatGPT & Private LLMs, One Router"
+date: 2026-11-03
+lastmod: 2026-11-04
+cover: /images/portfolio/sf-ops-cover.jpg
+coverAlt: "AI on your Salesforce data, safely: Salesforce records flow through a policy router to Claude or ChatGPT with PII masked, to a private LLM that stays in the network, or back to Salesforce at no model cost"
+summary: "Use AI on Salesforce data without moving off Salesforce, overpaying for one model or leaking customer data. A router sends each request to Salesforce itself, Claude, ChatGPT or a private LLM inside the client's network, chosen by sensitivity, stakes and cost, and masks personal data before anything leaves. On top: an Apex and Flow review that returns fixed code and tests, a revenue agent that works dormant leads with fact-checked drafts, and a sandbox refresh and migration planner. Nothing is written to Salesforce until a person approves it."
+description: "Salesforce AI router: requests go to Salesforce, Claude, ChatGPT or a private LLM by sensitivity and cost, with PII masking, Apex review, a revenue agent and approvals."
+categories:
+  - ai-agents
+  - ai-erp-saas
+  - security-compliance
+stack:
+  frontend:
+    - Next.js
+    - Tailwind CSS
+    - TypeScript
+  backend:
+    - Python and FastAPI
+    - Salesforce REST and Tooling APIs
+    - Deterministic rules engine under the AI
+  ai:
+    - Claude Opus 5.5 and Haiku 5.5 (structured outputs, tool-use agent loop, prompt caching)
+    - OpenAI SDK for ChatGPT
+    - Any OpenAI-compatible private model (Ollama, vLLM)
+    - Policy router by sensitivity, stakes and cost
+  data:
+    - Salesforce leads, cases and opportunities
+    - SQLite audit log
+  infra:
+    - Private LLM inside the client network
+  security:
+    - PII tokenised before any outside model, restored in the answer
+    - Medical and card data kept on the private model
+    - Every write to Salesforce approved by a person
+    - Every AI decision logged
+links:
+  github: https://github.com/DavitGadyan/Salesforce
+outcomes:
+  - "Sensitive records stay safe: medical and card data goes only to a model inside the network, and names, e-mails and phones are replaced with tokens before Claude or ChatGPT see them, then restored in the answer."
+  - "Each request goes to the cheapest safe option: a pipeline question is answered by Salesforce itself for $0, and the same deal-risk assessment cost $0.007 on Claude Opus, $0.0001 on Claude Haiku and nothing per call on the private model."
+  - "AI-written Apex is checked by fixed rules, then reviewed by Claude, which returns corrected code and a bulk test class; on one sample payment class it confirmed 8 rule findings and found 4 more, including a callout-after-DML error that stops the job after the first record."
+  - The revenue agent scores and tiers dormant leads and drafts short e-mails whose every fact is checked against the CRM, and the refresh planner turns a sandbox refresh or org move into an ordered, reviewed runbook.
+metrics:
+  - label: Model routes
+    value: "4 (Salesforce, Claude, ChatGPT, private LLM)"
+  - label: Pipeline question
+    value: "$0 (answered by Salesforce)"
+  - label: Deal-risk assessment
+    value: "$0.007 Opus · $0.0001 Haiku"
+  - label: Apex review, one class
+    value: "8 rule + 4 Claude findings"
+  - label: Writes without approval
+    value: "0"
+featured: true
+order: 9
+---
+
+## The problem
+
+Teams hiring for Salesforce and AI work keep describing the same problems. Legal worries that customer data will leak to an outside model. Finance worries about model bills and being locked into one vendor. Admins worry that AI-written Apex and Flows look fine and then break in production. Sales has thousands of old leads nobody works, and every sandbox refresh or org migration eats days of admin time.
+
+This project answers each of those with something working, not slides.
+
+## The product in use
+
+<Video src="/videos/sf-ops-copilot.mp4" poster="/videos/sf-ops-copilot.webp" ratio="4 / 3" title="Hybrid AI for Salesforce walkthrough" caption="Walkthrough of the router, the Apex review, the revenue agent and the refresh planner, recorded in real time with the model waits shown at 8× speed." />
+
+## What I built
+
+![AI router: a patient-intake record is routed to the private LLM because it contains medical data, and the decision trace shows it stayed inside the network](/images/portfolio/sf-ops-private-llm.jpg)
+
+**A router that decides where data may go.** Every request is checked for sensitive fields. Medical and card data goes only to a model inside the client's network. The decision trace shows which policy matched and why.
+
+![Masked prompt: names, e-mails and phones replaced with tokens before Claude sees the record, then restored in the answer](/images/portfolio/sf-ops-masked-prompt.jpg)
+
+**Masking before anything leaves.** Names, e-mails and phone numbers are replaced with tokens before Claude or ChatGPT see the record, then put back in the answer. Salesforce stays the system of record and the best model still does the job.
+
+![Model comparison: the same Salesforce opportunity assessed by Claude Opus, Claude Haiku and a private model, with latency and cost per answer](/images/portfolio/sf-ops-benchmark.jpg)
+
+**Cost decided on data, not a vendor pitch.** A compare view runs the same record across every connected model, so the routing choice rests on real cost and quality. Adding or swapping a provider is a setting, not a rebuild.
+
+![Apex review: findings on a payment class, then the corrected Queueable code shown as a diff](/images/portfolio/sf-ops-code-review.jpg)
+
+**Apex and Flow review that fixes the code.** Fixed rules catch queries inside loops, missing sharing and field security, hard-coded IDs and keys. Claude then confirms each finding, adds the ones rules cannot see, and returns corrected code with a bulk test class.
+
+![Refresh and migrate: record reconciliation between source and target, and Claude's architect review with a runbook](/images/portfolio/sf-ops-refresh-review.jpg)
+
+**Sandbox refreshes and migrations, planned.** After a refresh someone has to mask personal data, point integrations at test endpoints, stop scheduled jobs and reload test data, usually from memory. The planner builds that checklist from the org's own metadata, orders the data seeding so lookups resolve, maps fields for an org-to-org move, reconciles record counts, and has Claude review the plan and write the runbook.
+
+**People stay in control.** The revenue agent scores and tiers each lead, picks a next best action and drafts a short, specific e-mail. Any draft that cites something not in the CRM goes back for rewrite, and nothing is sent or updated until a person approves it. Every AI decision is logged.

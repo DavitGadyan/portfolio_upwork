@@ -1,0 +1,102 @@
+---
+title: "Azure AI Automation: Document Intelligence, RAG & Governed Agents"
+date: 2026-11-04
+lastmod: 2026-11-04
+cover: /images/portfolio/azure-ai-cover.jpg
+coverAlt: "Azure AI Automation cover: a laptop showing the dashboard with an invoice, a citation popup, an approval card and a trace timeline around it"
+summary: "An end-to-end Azure and LLM platform for construction and manufacturing back offices. It turns messy PDFs into validated data with the source quoted for every field, answers staff questions only from company documents with citations, and runs an AI agent whose every write action waits for human approval. Every call is traced and costed, and prompt versions are measured on golden sets. English and German."
+description: "Azure AI platform: document intelligence with field-level provenance, cited RAG that abstains, approval-gated agents, OpenTelemetry tracing and LLM evals. Python, React, Bicep."
+categories:
+  - ai-agents
+  - cloud-devops-llmops
+  - databases-data-eng
+stack:
+  frontend:
+    - React 19, Vite and TypeScript
+    - Tailwind CSS and shadcn/ui
+    - motion
+  backend:
+    - Python 3.12 and FastAPI
+    - SQLAlchemy and Pydantic
+    - Queue worker for async steps and approvals
+  ai:
+    - Claude via the Anthropic SDK, with a self-hosted Ollama alternative
+    - Structured outputs with a source quote for every field
+    - Hybrid retrieval (vector + keyword, RRF fusion, rerank)
+    - Tool-calling agent, also exposed over MCP
+    - Golden-set evals with LLM judges
+  data:
+    - PostgreSQL 16 with pgvector and full-text search
+    - Azure AI Document Intelligence, PyMuPDF and vision OCR
+    - Azure Blob and Queue storage (Azurite locally)
+  infra:
+    - Azure Container Apps with managed identity
+    - Bicep, Key Vault, Log Analytics
+    - OpenTelemetry to Postgres and Application Insights
+    - Docker Compose and GitHub Actions
+  security:
+    - Role-based tool permissions and a kill switch
+    - Every agent write action approved by a person
+    - Complete audit log
+    - Prompt-injection hygiene, token budgets and tool timeouts
+links:
+  github: https://github.com/DavitGadyan/Azure
+outcomes:
+  - Supplier invoices, inspection reports, material certificates and drawings become typed records with the exact source text quoted for every field; deterministic rules flag a German invoice with a wrong net amount instead of booking it.
+  - Staff questions are answered only from company documents, with numbered citations that open the source passage and an explicit "insufficient context" answer when the documents do not cover it.
+  - The agent can look things up freely, but creating tickets, changing orders or e-mailing suppliers waits for an approver; the same tools work from Claude Desktop or Claude Code over MCP with the same approvals.
+  - Every document run, answer and agent run is a trace with tokens and cost per model call, and prompt changes are compared on golden-set numbers, not impressions.
+metrics:
+  - label: Retrieval recall@5
+    value: "1.00"
+  - label: QA correctness
+    value: "0.875 → 1.00"
+  - label: Extraction field accuracy
+    value: "0.97"
+  - label: Provenance quotes located
+    value: "30 / 30"
+  - label: Languages
+    value: "EN + DE"
+featured: true
+order: 7
+---
+
+## The problem
+
+Teams that try to connect Azure AI services to real operations hit the same walls: many services to orchestrate (Document Intelligence, Blob storage, queues, search and the model), state that has to survive async steps and human approvals, tool calls that crash the agent loop, compliance requirements around GDPR, audit and identity, and no way to tell whether a prompt change made answers better or worse.
+
+This platform is built for construction and manufacturing back offices, where the paperwork is supplier invoices, inspection reports, material certificates and drawing sheets, in English and German.
+
+## The product in use
+
+<Video src="/videos/azure-ai-automation.mp4" poster="/videos/azure-ai-automation.webp" ratio="16 / 10" title="Azure AI Automation walkthrough" caption="Walkthrough: a flagged German invoice with field-level provenance, a cited answer, an agent request that waits for approval and resumes, the trace that ties it together, and an eval comparison between two configurations." />
+
+## What I built
+
+![Dashboard: documents processed, agent runs, pending approvals and LLM cost, with cost per day by module and spend per model](/images/portfolio/azure-ai-dashboard.jpg)
+
+**One view of cost and quality.** Documents processed, agent runs, pending approvals and model spend for the last 14 days, broken down by module and by model.
+
+![A German concrete invoice next to its extracted fields, each field linked to the exact place on the page it came from](/images/portfolio/azure-ai-provenance.jpg)
+
+**Document intelligence with provenance.** The pipeline extracts words with coordinates (PyMuPDF, Azure AI Document Intelligence, or vision OCR for scans), classifies the document and extracts a typed record with structured outputs. Every field quotes its source text, so a reviewer can click a value and see where on the page it came from.
+
+![Validation tab: the line items sum to 9,630.00 but the subtotal says 9,530, so the invoice is flagged for review](/images/portfolio/azure-ai-validation.jpg)
+
+**Rules before booking.** Deterministic checks validate totals, dates and cross-field logic. Here the line items do not add up to the subtotal, so the invoice goes to review instead of into the books.
+
+![Operations agent opening a high-priority ticket for a failed concrete cube test, with each tool call shown](/images/portfolio/azure-ai-agent.jpg)
+
+![Approvals: a send-email action requested by the agent waits for a person to approve or reject it](/images/portfolio/azure-ai-approval.jpg)
+
+**A governed agent.** A tool-calling agent looks up projects, suppliers, purchase orders and tickets and searches the knowledge base. Anything that writes (a ticket, an order status, an e-mail to a supplier) is parked for an approver; the worker executes it after approval and the run resumes. Role-based tool permissions, loop detection, token budgets, tool timeouts, a kill switch and a complete audit log sit around it.
+
+![Trace waterfall of one agent run: model calls, tool calls and the approved action, with time and cost per span](/images/portfolio/azure-ai-trace.jpg)
+
+![Evals: golden-set runs for retrieval, QA and extraction, and a comparison between two prompt and embedding configurations](/images/portfolio/azure-ai-evals.jpg)
+
+**Traced and measured.** Every run is an OpenTelemetry trace with token counts and cost per model call, viewable in the app or in Application Insights. Prompts are versioned and golden sets measure retrieval recall, answer correctness and faithfulness, abstention and extraction accuracy. On the demo data, switching to a multilingual embedding model took QA correctness and abstention accuracy from 0.875 to 1.00; the eval view is what showed the gap.
+
+## How it runs
+
+Local-first: one `docker compose up` runs the API, worker, UI, PostgreSQL with pgvector and Azurite, with no Azure resources needed. The same code deploys to Azure Container Apps with managed identity, Key Vault, Blob and Queue storage, PostgreSQL Flexible Server, Document Intelligence and Log Analytics, all defined in Bicep.

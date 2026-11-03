@@ -609,6 +609,8 @@ body {
   .cc__actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
   .cc__btn { min-height: 2.75rem; padding: 0 1.25rem; border: 2px solid #fff; background: transparent; color: #fff; font: inherit; font-size: 0.85rem; font-weight: 600; border-radius: 2px; cursor: pointer; }
   .cc__btn:hover { background: #fff; color: var(--color-ink-800); }
+  .cc--pill { inset: auto auto 1rem 1rem; display: inline-flex; align-items: center; gap: .45rem; padding: .55rem .95rem; border: 1px solid rgba(255,255,255,.35); border-radius: 9999px; font: inherit; font-size: .8rem; font-weight: 600; cursor: pointer; box-shadow: 0 8px 22px -10px rgba(0,0,0,.6); }
+  .cc--pill:hover { background: var(--color-ink-900); border-color: #fff; }
 
   /* Floating scroll-to-top */
   .totop { position: fixed; right: 1rem; bottom: calc(1.5rem + var(--cc-h, 0px)); z-index: 55; width: 2.75rem; height: 2.75rem; border-radius: 9999px; border: 2px solid var(--color-ink-300); background: rgba(43,44,47,.9); color: #fff; display: grid; place-items: center; cursor: pointer; transition: opacity .3s, transform .3s, bottom .2s; }
