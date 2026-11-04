@@ -1,5 +1,6 @@
 import { SITE_URL, SOCIAL, absUrl } from '@/lib/site';
 import { materials } from '@/data/materials';
+import { tracks } from '@/data/quizzes';
 import type { Locale } from '@/lib/i18n/config';
 import { getMessages } from '@/lib/i18n/messages';
 import { localizePath } from '@/lib/locale-path';
@@ -55,6 +56,12 @@ export function buildLlms(locale: Locale, full: boolean): string {
       L.push('', `**${t.heading[locale]}** ${t.intro[locale]}`, '', `| ${t.columns.map((c) => c[locale]).join(' | ')} |`, `|${t.columns.map(() => ' --- |').join('')}`);
       for (const r of t.rows) L.push(`| ${r.cells.map((c, j) => c[locale] + (j === 1 && r.note ? ` (${r.note[locale]})` : '')).join(' | ')} |`);
     }
+    L.push('');
+  }
+  L.push(`### ${m.quizzes.heading}`, '', `${m.quizzes.intro} ${url('/materials/quizzes/')}`, '');
+  for (const t of tracks) {
+    L.push(`#### [${t.title[locale]}](${url(`/materials/quizzes/${t.id}/`)})`, '');
+    for (const n of t.nodes) L.push(`- **${n.title[locale]}** — ${n.what[locale]}`);
     L.push('');
   }
   L.push(`## ${es ? 'Proyectos destacados' : 'Featured projects'}`);

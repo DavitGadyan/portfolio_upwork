@@ -16,6 +16,8 @@ import { TechniqueGraph, type ToolView } from '@/components/materials/TechniqueG
 import { TechIcon } from '@/components/materials/icons';
 import { DataTable } from '@/components/materials/DataTable';
 import { videos, VIDEO_LABELS } from '@/data/videos';
+import { QUIZZES_PATH, tracks } from '@/data/quizzes';
+import { ListChecks } from 'lucide-react';
 
 const INDEX = '/materials/';
 const toolPath = (id: string) => `${INDEX}${id}/`;
@@ -66,6 +68,14 @@ export function MaterialsPage({ locale }: { locale: Locale }) {
                 <strong>{VIDEO_LABELS.folder[locale]}</strong>
                 <p>{VIDEO_LABELS.sectionIntro[locale]}</p>
                 <small>{fmt(VIDEO_LABELS.count[locale], { n: videos.length })} · {VIDEO_LABELS.watch[locale]} →</small>
+              </Link>
+            </li>
+            <li>
+              <Link href={pagePath(locale, QUIZZES_PATH)} className="tg__tile" prefetch={false}>
+                <span className="tg__tile-icon" aria-hidden="true"><ListChecks size={28} strokeWidth={2} /></span>
+                <strong>{m.quizzes.heading}</strong>
+                <p>{m.quizzes.tagline}</p>
+                <small>{fmt(m.quizzes.count, { n: tracks.length })} · {m.quizzes.open} →</small>
               </Link>
             </li>
           </ul>

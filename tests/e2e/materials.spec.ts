@@ -17,7 +17,7 @@ test.describe('materials', () => {
     await page.goto('/materials/');
     await expect(page.locator('h1')).toHaveCount(1);
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', /\/materials\/$/);
-    await expect(page.locator('.tg__tile')).toHaveCount(5); // Claude, AEO, GEO, KPIs, SEO
+    await expect(page.locator('.tg__tile')).toHaveCount(7); // Claude, AEO, GEO, KPIs, SEO + the Videos and Code Quizzes folders
     const tile = page.locator('.tg__tile').first();
     await expect(tile).toContainText('Claude');
     if (!isMobile) {
