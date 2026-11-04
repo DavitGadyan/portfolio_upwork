@@ -7,7 +7,7 @@ test.describe('project showcase', () => {
     const order = [/Virgil\.ai/, /Real Estate/, /ImprovTalk/, /YOLO26\/27/, /Crypto Trading Bots/, /AI Trading Assistant/];
     for (const [i, re] of order.entries()) await expect(titles.nth(i)).toHaveText(re);
     // third row: Azure, HubSpot, Salesforce; then Receptra and SEO marketing start the next row
-    const next = [/Azure AI Automation/, /HubAIOps/, /Salesforce/, /Receptra/, /AI Marketing/];
+    const next = [/Azure AI Automation/, /HubAIOps/, /Salesforce/, /Receptra/, /Snowflake/, /CareLens/, /AI Marketing/];
     for (const [i, re] of next.entries()) await expect(titles.nth(6 + i)).toHaveText(re);
   });
 
