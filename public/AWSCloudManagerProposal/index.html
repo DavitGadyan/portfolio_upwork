@@ -55,7 +55,8 @@ async function openPayload(payload, keyB64) {
     document.title = doc.title + ' · David Gadyan';
     $('msg').hidden = true;
     var frame = document.createElement('iframe');
-    frame.setAttribute('sandbox', 'allow-scripts allow-popups allow-popups-to-escape-sandbox allow-modals allow-downloads');
+    // allow-same-origin: the frame holds this app's own page, which needs the site's origin to save edits (the edit mode) - the portfolio's viewer keeps it opaque.
+    frame.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-modals allow-downloads');
     frame.setAttribute('title', doc.title);
     frame.srcdoc = doc.html;
     document.body.appendChild(frame);
