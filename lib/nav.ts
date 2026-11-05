@@ -14,7 +14,7 @@ export function getNav(locale: Locale, m: Messages): NavItem[] {
     sec('portfolio', m.nav.portfolio),
     sec('testimonials', m.nav.testimonials),
     { id: 'blog', label: m.nav.blog, href: `${homePath(locale)}blog/`, kind: 'page' },
-    { id: 'materials', label: m.nav.materials, href: `${homePath(locale)}materials/`, kind: 'page', prefetch: false },
+    // /materials/ is on purpose not listed anywhere in the UI: the folder is reached only through links sent by hand (proposals, short links). Its pages still build, and the breadcrumbs inside it still lead back here.
     { id: 'cv', label: m.about.cv, href: withBasePath(CV_PATH), kind: 'file' },
   ];
 }
