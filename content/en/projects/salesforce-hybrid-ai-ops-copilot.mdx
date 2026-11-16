@@ -20,9 +20,9 @@ stack:
     - Salesforce REST and Tooling APIs
     - Deterministic rules engine under the AI
   ai:
-    - Claude Opus 5.5 and Haiku 5.5 (structured outputs, tool-use agent loop, prompt caching)
+    - Claude Opus 5.5 and Haiku 5.5
     - OpenAI SDK for ChatGPT
-    - Any OpenAI-compatible private model (Ollama, vLLM)
+    - Private models (Ollama, vLLM)
     - Policy router by sensitivity, stakes and cost
   data:
     - Salesforce leads, cases and opportunities
@@ -30,9 +30,9 @@ stack:
   infra:
     - Private LLM inside the client network
   security:
-    - PII tokenised before any outside model, restored in the answer
-    - Medical and card data kept on the private model
-    - Every write to Salesforce approved by a person
+    - PII tokenised before outside models
+    - Medical and card data on the private model
+    - Every Salesforce write approved by a person
     - Every AI decision logged
 links:
   github: https://github.com/DavitGadyan/Salesforce

@@ -20,25 +20,25 @@ stack:
     - SQLAlchemy and Pydantic
     - Queue worker for async steps and approvals
   ai:
-    - Claude via the Anthropic SDK, with a self-hosted Ollama alternative
-    - Structured outputs with a source quote for every field
-    - Hybrid retrieval (vector + keyword, RRF fusion, rerank)
+    - Claude via Anthropic SDK, Ollama fallback
+    - Structured outputs with source quotes
+    - Hybrid retrieval with RRF and reranking
     - Tool-calling agent, also exposed over MCP
     - Golden-set evals with LLM judges
   data:
-    - PostgreSQL 16 with pgvector and full-text search
-    - Azure AI Document Intelligence, PyMuPDF and vision OCR
-    - Azure Blob and Queue storage (Azurite locally)
+    - PostgreSQL 16 with pgvector
+    - Azure Document Intelligence, vision OCR
+    - Azure Blob and Queue storage
   infra:
     - Azure Container Apps with managed identity
     - Bicep, Key Vault, Log Analytics
-    - OpenTelemetry to Postgres and Application Insights
+    - OpenTelemetry, Application Insights
     - Docker Compose and GitHub Actions
   security:
     - Role-based tool permissions and a kill switch
     - Every agent write action approved by a person
     - Complete audit log
-    - Prompt-injection hygiene, token budgets and tool timeouts
+    - Prompt-injection hygiene, token budgets
 links:
   github: https://github.com/DavitGadyan/Azure
 outcomes:
