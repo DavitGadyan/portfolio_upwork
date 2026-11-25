@@ -4,20 +4,20 @@ coverAlt: "IA sobre tus datos de Salesforce, con seguridad: los registros pasan 
 summary: "Usar IA sobre los datos de Salesforce sin salir de Salesforce, sin pagar de más por un único modelo y sin filtrar datos de clientes. Un router envía cada petición a Salesforce, a Claude, a ChatGPT o a un LLM privado dentro de la red del cliente según la sensibilidad, lo que está en juego y el coste, y enmascara los datos personales antes de que salga nada. Encima: una revisión de Apex y Flow que devuelve código corregido y tests, un agente de ingresos que trabaja leads dormidos con borradores verificados y un planificador de refrescos de sandbox y migraciones. Nada se escribe en Salesforce sin la aprobación de una persona."
 description: "Router de IA para Salesforce: cada petición va a Salesforce, Claude, ChatGPT o un LLM privado según sensibilidad y coste, con enmascarado de datos, revisión de Apex y aprobaciones."
 outcomes:
-  - "Los registros sensibles quedan protegidos: los datos médicos y de tarjeta solo van a un modelo dentro de la red, y nombres, correos y teléfonos se sustituyen por tokens antes de que Claude o ChatGPT los vean, y se restauran en la respuesta."
-  - "Cada petición va a la opción segura más barata: una pregunta de pipeline la responde Salesforce por 0 $, y la misma evaluación de riesgo de una oportunidad costó 0,007 $ con Claude Opus, 0,0001 $ con Claude Haiku y nada por llamada con el modelo privado."
-  - "El Apex escrito con IA pasa primero por reglas fijas y después por Claude, que devuelve código corregido y una clase de test masivo; en una clase de pagos de ejemplo confirmó 8 hallazgos de las reglas y encontró 4 más, incluido un error de callout después de DML que detiene el proceso tras el primer registro."
-  - El agente de ingresos puntúa y clasifica leads dormidos y redacta correos breves con cada dato verificado contra el CRM, y el planificador convierte un refresco de sandbox o una migración entre orgs en un runbook ordenado y revisado.
+  - "Para reducir el gasto en modelos, cada petición se enruta según sensibilidad, riesgo y coste: una pregunta sobre el pipeline la responde el propio Salesforce por 0 $, y la misma evaluación de riesgo de una oportunidad costó 0,007 $ en Claude Opus frente a 0,0001 $ en Claude Haiku y nada por llamada en el modelo privado."
+  - "Para que los datos del CRM no se filtren, los datos médicos y de tarjetas solo van a un modelo dentro de la red, y nombres, correos y teléfonos se sustituyen por tokens antes de que un modelo externo los vea y se restauran en la respuesta."
+  - "Para que el Apex escrito con IA no se rompa en producción, las reglas encontraron 8 problemas en una clase de pagos de ejemplo y Claude halló 4 más, incluido un callout después de DML que detiene el trabajo tras el primer registro, y devolvió el código corregido y una clase de test masivo."
+  - "Cada lead dormido recibe una puntuación, una siguiente mejor acción y un borrador de correo con cada dato comprobado contra el registro, y cada refresh de sandbox recibe una lista construida a partir de los metadatos de la propia org en lugar de hacerse de memoria."
+  - "Los agentes solo proponen, así que 0 escrituras llegan a Salesforce sin la aprobación de una persona, y cada llamada al modelo y cada decisión quedan registradas con tokens y coste."
 metrics:
-  - label: Rutas de modelo
-    value: "4 (Salesforce, Claude, ChatGPT, LLM privado)"
-  - label: Pregunta de pipeline
-    value: "0 $ (la responde Salesforce)"
-  - label: Riesgo de una oportunidad
-    value: "0,007 $ Opus · 0,0001 $ Haiku"
-  - label: Revisión de Apex, una clase
-    value: "8 de reglas + 4 de Claude"
-  - label: Escrituras sin aprobación
+  - label: "Riesgo de oportunidad, Opus vs Haiku"
+    before: "0,007 $"
+    value: "0,0001 $"
+  - label: "Datos médicos/tarjeta fuera de la red"
+    value: "Ninguno"
+  - label: "Hallazgos de Apex, reglas + Claude"
+    value: "8 + 4"
+  - label: "Escrituras sin aprobación humana"
     value: "0"
 ---
 

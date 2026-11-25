@@ -4,20 +4,20 @@ coverAlt: "Portada de Azure AI Automation: un portátil con el panel, una factur
 summary: "Plataforma integral de Azure y LLM para el back office de construcción e industria. Convierte PDF desordenados en datos validados citando la fuente de cada campo, responde a las preguntas del equipo solo con documentos de la empresa y con citas, y ejecuta un agente de IA cuyas acciones de escritura esperan siempre la aprobación de una persona. Cada llamada se traza y se costea, y las versiones de prompts se miden con conjuntos de referencia. En inglés y alemán."
 description: "Plataforma de IA en Azure: extracción de documentos con procedencia por campo, RAG con citas que sabe abstenerse, agentes con aprobación, trazas OpenTelemetry y evals de LLM."
 outcomes:
-  - Facturas de proveedores, informes de inspección, certificados de material y planos se convierten en registros tipados citando el texto exacto de cada campo; las reglas deterministas marcan una factura alemana con un neto erróneo en lugar de contabilizarla.
-  - Las preguntas del equipo se responden solo con documentos de la empresa, con citas numeradas que abren el pasaje original y una respuesta explícita de «contexto insuficiente» cuando los documentos no lo cubren.
-  - El agente puede consultar libremente, pero crear tickets, cambiar pedidos o escribir a proveedores espera a un aprobador; las mismas herramientas funcionan desde Claude Desktop o Claude Code por MCP con las mismas aprobaciones.
-  - Cada procesamiento, respuesta y ejecución del agente es una traza con tokens y coste por llamada al modelo, y los cambios de prompt se comparan con cifras de referencia, no con impresiones.
+  - "Los cambios de prompt y de embeddings se deciden con los números de los conjuntos de referencia: al cambiar al modelo multilingüe bge-m3, la corrección de QA y la precisión de la abstención pasaron de 0,875 a 1,00."
+  - "Recall@5 de 1,00 y MRR de 1,00 en el conjunto de referencia bilingüe del manual de obra, con una abstención explícita cuando los documentos no cubren la pregunta."
+  - "Precisión de 0,97 por campo en la extracción de seis PDF en inglés y alemán; las 30 citas de procedencia de un certificado localizadas en la página, y una factura cuyas líneas no suman el importe neto se marca para revisión en lugar de contabilizarse."
+  - "Cada acción de escritura del agente espera a una persona que la apruebe, también cuando se invoca por MCP, y los errores de herramienta vuelven al modelo en lugar de romper el bucle."
+  - "Cada ejecución es una traza de OpenTelemetry con los tokens y el coste de cada llamada al modelo."
 metrics:
-  - label: Recall@5 de recuperación
-    value: "1.00"
-  - label: Precisión de respuestas
-    value: "0.875 → 1.00"
-  - label: Precisión de extracción por campo
-    value: "0.97"
-  - label: Citas de procedencia localizadas
-    value: "30 / 30"
-  - label: Idiomas
+  - label: "Corrección de QA y abstención"
+    before: "0,875"
+    value: "1,00"
+  - label: "Recall@5 de la recuperación, bilingüe"
+    value: "1,00"
+  - label: "Precisión por campo en la extracción"
+    value: "0,97"
+  - label: "Escrituras del agente con aprobación"
     value: "EN + DE"
 ---
 

@@ -42,21 +42,21 @@ stack:
 links:
   github: https://github.com/DavitGadyan/Azure
 outcomes:
-  - Supplier invoices, inspection reports, material certificates and drawings become typed records with the exact source text quoted for every field; deterministic rules flag a German invoice with a wrong net amount instead of booking it.
-  - Staff questions are answered only from company documents, with numbered citations that open the source passage and an explicit "insufficient context" answer when the documents do not cover it.
-  - The agent can look things up freely, but creating tickets, changing orders or e-mailing suppliers waits for an approver; the same tools work from Claude Desktop or Claude Code over MCP with the same approvals.
-  - Every document run, answer and agent run is a trace with tokens and cost per model call, and prompt changes are compared on golden-set numbers, not impressions.
+  - "Prompt and embedding changes are decided on golden-set numbers: switching to the multilingual bge-m3 model took QA correctness and abstention accuracy from 0.875 to 1.00."
+  - "Retrieval recall@5 of 1.00 and MRR 1.00 on the bilingual site-handbook golden set, with an explicit abstention when the documents do not cover the question."
+  - "Extraction field accuracy of 0.97 across six English and German PDFs; all 30 provenance quotes of a certificate located on the page, and an invoice whose line items do not sum to the net amount is flagged instead of booked."
+  - "Every write action of the agent waits for a human approver, also when called through MCP, and tool errors go back to the model instead of crashing the loop."
+  - "Every run is an OpenTelemetry trace with token counts and cost per model call."
 metrics:
-  - label: Retrieval recall@5
+  - label: "QA correctness and abstention"
+    before: "0.875"
     value: "1.00"
-  - label: QA correctness
-    value: "0.875 → 1.00"
-  - label: Extraction field accuracy
+  - label: "Retrieval recall@5, bilingual set"
+    value: "1.00"
+  - label: "Extraction field accuracy"
     value: "0.97"
-  - label: Provenance quotes located
-    value: "30 / 30"
-  - label: Languages
-    value: "EN + DE"
+  - label: "Agent writes needing human approval"
+    value: "all"
 featured: true
 order: 7
 ---
